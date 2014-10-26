@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="CSeR"
+            id="CSeR">
+      </category>
+      <view
+            name="Templates"
+            icon="icons/sample.gif"
+            category="CSeR"
+            class="cser.ast.view.CSeRCloneView"
+            id="cser.ui.views.RCFView"/>
+   </extension>
+
+   <extension id ="cserjavaeditor"
+         point="org.eclipse.ui.editors">
+      <editor
+            name="CSeR Java Editor"
+            default="true"
+            icon="icons/sample.gif"
+            contributorClass="org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditorActionContributor"
+            class="cser.editors.CSeREditor"
+            id="cser.editors.RCFEditor">
+                 <contentTypeBinding contentTypeId="org.eclipse.jdt.core.javaSource"/>
+            
+      </editor>
+     </extension>
+−
+<extension point="org.eclipse.jdt.ui.quickAssistProcessors">
+<quickAssistProcessor
+name="My Assist" 
+class="cser.assist.MyQuickAssistProcessor" 
+id="org.eclipse.jdt.tutorial.MyQuickAssistProcessor">
+</quickAssistProcessor>
+</extension>
+<extension point="org.eclipse.ui.editorActions">
+    <editorContribution targetID="cser.editors.RCFEditor" id="org.eclipse.jdt.internal.ui.CompilationUnitEditor.ruler.actions">
+<action label="BookmarkRulerAction.label" helpContextId="org.eclipse.ui.bookmark_action_context" class="org.eclipse.ui.texteditor.BookmarkRulerAction" actionID="RulerDoubleClick" id="org.eclipse.jdt.internal.ui.javaeditor.BookmarkRulerAction">
+         </action>
+<action label="JavaSelectRulerAction.label" class="org.eclipse.jdt.internal.ui.javaeditor.JavaSelectRulerAction" actionID="RulerClick" id="org.eclipse.jdt.internal.ui.javaeditor.JavaSelectRulerAction"/>
+<action label="JavaSelectRCFRulerAction.label" class="cser.assist.RCFJavaSelectRulerAction" actionID="RulerClick" id="cser.assist.RCFJavaSelectRulerAction"/>
+</editorContribution>
+</extension>
+      
+
+<extension id="cser.marker" 
+point="org.eclipse.core.resources.markers"
+name="CSeR Marker">
+<persistent 
+value="false"/>
+
+ </extension>
+ <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+ 
+            <specification
+            annotationType="cserannotationd"
+            verticalRulerPreferenceKey="highlight.rulers.vertical2"
+            textPreferenceKey="highlight.text2"
+            colorPreferenceKey="highlight.color2"
+            highlightPreferenceKey="highlight.background2"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overview2"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutaten2"
+             icon="icons/noimage.gif"
+            colorPreferenceValue="250,50,50"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.style2">
+            </specification>
+      <specification
+            
+annotationType="cserstmt"
+            verticalRulerPreferenceKey="highlight.rulers.vertical"
+            textPreferenceKey="highlight.text"
+            colorPreferenceKey="highlight.color"
+            highlightPreferenceKey="highlight.background"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overview"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutaten"
+            icon="icons/noimage.gif"
+            colorPreferenceValue="253,255,100"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.style">
+            </specification>
+      
+      <specification
+            annotationType="cserstmtinsert"
+            verticalRulerPreferenceKey="highlight.rulers.vertical1"
+            textPreferenceKey="highlight.text1"
+            colorPreferenceKey="highlight.color1"
+            highlightPreferenceKey="highlight.background1"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overview1"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutaten1"
+            icon="icons/noimage.gif"
+            colorPreferenceValue="102,204,51"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.style1">
+    </specification>
+      
+            <specification
+            annotationType="cserannotationdF"
+            verticalRulerPreferenceKey="highlight.rulers.vertical2"
+            textPreferenceKey="highlight.text2"
+            colorPreferenceKey="highlight.color2"
+            highlightPreferenceKey="highlight.background2"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overview2"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutaten2"
+             icon="icons/noimage.gif"
+            colorPreferenceValue="250,50,50"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.style2">
+            </specification>
+
+      
+      <specification
+            annotationType="cserstmtinsertF"
+            verticalRulerPreferenceKey="highlight.rulers.vertical1"
+            textPreferenceKey="highlight.text1"
+            colorPreferenceKey="highlight.color1"
+            highlightPreferenceKey="highlight.background1"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overview1"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutaten1"
+            icon="icons/noimage.gif"
+            colorPreferenceValue="102,204,51"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.style1">
+    </specification>
+      <specification
+            annotationType="cserstmtmove"
+            verticalRulerPreferenceKey="highlight.rulers.verticalmove"
+            textPreferenceKey="highlight.textmove"
+            colorPreferenceKey="highlight.colormove"
+            highlightPreferenceKey="highlight.backgroundmove"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overviewmove"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutatenmove"
+            icon="icons/noimage.gif"
+            colorPreferenceValue="150,225,255"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.stylemove">
+    </specification> 
+           <specification
+            annotationType="processing"
+            verticalRulerPreferenceKey="highlight.rulers.verticalprocessing"
+            textPreferenceKey="highlight.textprocessing"
+            colorPreferenceKey="highlight.colorprocessing"
+            highlightPreferenceKey="highlight.backgroundprocessing"
+            textPreferenceValue="false"
+            textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="highlight.rulers.overviewprocessing"
+            presentationLayer="4"
+            highlightPreferenceValue="true"
+            label="Zutatenprocessing"
+            icon="icons/hourglass.gif"
+            colorPreferenceValue="255,255,255"
+            verticalRulerPreferenceValue="true"
+            overviewRulerPreferenceValue="true"
+            textStylePreferenceKey="highlight.text.styleprocessing">
+    </specification> 
+ </extension>
+    
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+        <type
+         name="cserannotationd"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+           <type
+         name="cserstmt"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+           <type
+         name="cserstmtinsert"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+              <type
+         name="cserannotationdF"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+           <type
+         name="cserstmtinsertF"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+                 <type
+         name="cserstmtmove"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+                       <type
+         name="processing"
+         markerType="cser.marker"
+         markerSeverity="2">
+      </type>
+      </extension>
+   <extension
+         point="org.eclipse.jdt.ui.javaEditorTextHovers">
+      <hover
+            activate="false"
+            class="cser.assist.hover.CSeRTextHover"
+            id="CSerPlugin.hover1">
+      </hover>
+   </extension>
+  
+       
+ 
+
+   <extension
+
+         point="org.eclipse.ui.popupMenus">
+
+
+
+      <objectContribution
+
+            objectClass="org.eclipse.core.resources.IResource"
+
+            adaptable="true"
+
+            id="com.leucht.eclipse.externaldiff.CompareAction">
+
+         <action
+
+               label="Each Other (CSeR)"
+
+               tooltip="Compare the Selected Resources using external diff tool"
+
+               class="cser.compare.view.CSeRCompareAction"
+
+               menubarPath="compareWithMenu/compareWithGroup"
+
+               enablesFor="2"
+
+               id="com.leucht.eclipse.externaldiff.compareWithEachOther">
+
+         </action>
+
+      </objectContribution>
+      
+      
+
+   </extension>
+
+   
+
+   <extension
+         point="org.eclipse.compare.contentMergeViewers">
+      <viewer
+            extensions="cser.compare.view.CSeRContentViewerCreator"
+            class="cser.compare.view.CSeRContentViewerCreator"
+            id="cser.compare.view.CSeRContentViewerCreator">
+      </viewer>
+   </extension>
+   
+
+</plugin>

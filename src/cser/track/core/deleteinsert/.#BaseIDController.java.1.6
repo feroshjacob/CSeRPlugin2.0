@@ -1,0 +1,167 @@
+package cser.track.core.deleteinsert;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.core.dom.ASTMatcher;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jface.text.Position;
+
+
+import cser.utils.GlobalConfig;
+import cser.utils.PositionUtils;
+
+public abstract class BaseIDController implements IIDController {
+	
+	/*
+	 * 
+	 * This is the one which decides whether a newly added node is a replica of the existing node
+	 * It takes a list of inserted nodes and another list deleted node and the output would be
+	 * calculated inserted nodes and calculated deleted nodes, there would be update nodes also
+	 */
+	
+	protected List<ASTNode> intialinsNodes = null;
+	protected List<ASTNode> intialdelNodes = null;
+	protected List<ASTNode> finalinsNodes = null;
+	protected List<ASTNode> finaldelNodes = null;
+	private static List<ASTNode> deletedNodesStore =  new ArrayList<ASTNode>();
+	protected Map<ASTNode,ASTNode> updatedNodes = new HashMap<ASTNode,ASTNode>();
+    public Map<ASTNode,ASTNode> getUpdatedNodes() {
+		return updatedNodes;
+	}
+	private Map<ASTNode,ASTNode> removedNodes = new HashMap<ASTNode,ASTNode>();
+    private List<ASTNode> movedNodes = new ArrayList<ASTNode>();
+	
+	public BaseIDController(List<ASTNode> insertedNodes, List<ASTNode> deletedNodes) {
+		this.intialdelNodes = deletedNodes;
+		this.intialinsNodes = insertedNodes;
+		this.finaldelNodes = getThirdElementFromList(deletedNodes);
+		this.finalinsNodes = getThirdElementFromList(insertedNodes);
+		
+		
+		/*
+		 * This removes the nodes which are both in insertedNode List and deletedNode List
+		 * This is basically to support the undo operation
+		 */
+		removeDeletedNodesSameSession();
+		deletedNodesStore.addAll(getDeletedNodes());
+		removeDeletedNodesDifferentSession();
+		processMovedNodes();
+		
+	}
+
+	private void processMovedNodes() {
+	
+		for(int i=0; i < finalinsNodes.size(); i++) 
+			for(int j=0; j < finalinsNodes.size();j++)
+				if(i!=j &&  finalinsNodes.get(j).toString().contains(finalinsNodes.get(i).toString()) && !(finalinsNodes.get(i).toString().contentEquals( finalinsNodes.get(j).toString()))){
+				 ASTNode node =finalinsNodes.get(i);
+				finalinsNodes.remove(node);
+				movedNodes.add(node);
+
+		}
+		
+	}
+
+
+
+	private void removeDeletedNodesDifferentSession( ) {
+		   Iterator<ASTNode> iterator = deletedNodesStore.iterator();
+		
+			for(int i=0; iterator.hasNext();i++) {
+				   Iterator<ASTNode> iterator1 = finalinsNodes.iterator();
+				   ASTNode parentNode = iterator.next();
+					for(int j=0; iterator1.hasNext();j++ ) {
+						 ASTNode crntNode = iterator1.next();
+					if(parentNode.subtreeMatch(new ASTMatcher(), crntNode)){
+							movedNodes.add(crntNode);
+						iterator.remove();
+						iterator1.remove();
+					}
+				
+				}
+				
+			}
+			
+		}
+	private void removeDeletedNodesSameSession( ) {
+	   Iterator<ASTNode> iterator = finaldelNodes.iterator();
+	
+		for(int i=0; iterator.hasNext();i++) {
+			   Iterator<ASTNode> iterator1 = finalinsNodes.iterator();
+			   boolean removeMe = true;
+			   ASTNode parentNode = iterator.next();
+				for(int j=0; iterator1.hasNext();j++ ) {
+					 ASTNode crntNode = iterator1.next();
+				if(parentNode.subtreeMatch(new ASTMatcher(), crntNode)){
+					removeMe =checkBeforeAndAfter(parentNode,crntNode,3*i,3*j);
+					if(removeMe) {
+						removedNodes.put(parentNode,crntNode);
+
+					}
+					else {
+						movedNodes.add(crntNode);
+					}
+					iterator.remove();
+					iterator1.remove();
+					
+				}
+				else if(checkForUpdate(parentNode,crntNode)) {
+					
+					updatedNodes.put(parentNode,crntNode);
+					iterator.remove();
+					iterator1.remove();
+					
+				}
+			
+			}
+			
+		}
+		
+	}
+	private boolean checkForUpdate(ASTNode astNode1, ASTNode astNode2) {
+     if(astNode1.getNodeType() != astNode2.getNodeType()) return false;
+      double levenshtein = StringUtils.getLevenshteinDistance(astNode1.toString(), astNode2.toString());
+      int lenCode1 = astNode1.toString().length();
+      int lenCode2 = astNode2.toString().length();
+      int maxLen = lenCode1>=lenCode2?lenCode1:lenCode2;
+      return (levenshtein/maxLen  < GlobalConfig.levenshteinRatio);
+	}
+
+	protected abstract boolean checkBeforeAndAfter(ASTNode astNode1, ASTNode astNode2,
+			int i, int j) ;
+
+	public List<ASTNode> getDeletedNodes() {
+		return finaldelNodes;
+	}
+
+	public  List<ASTNode> getInsertedNodes() {
+		return finalinsNodes;
+	}
+	
+private List<ASTNode> getThirdElementFromList(List<ASTNode> list) {
+	List<ASTNode> aSTNodes = new ArrayList<ASTNode>();
+	for(int i =1; i < list.size(); ){
+		aSTNodes.add(list.get(i));
+		i = i+3;
+	}
+	return aSTNodes;
+}
+
+
+
+
+public Map<ASTNode,ASTNode> getRemovedNodes() {
+	
+	return removedNodes;
+}
+public  List<ASTNode> getMovedNodes() {
+	return movedNodes;
+}
+
+}
