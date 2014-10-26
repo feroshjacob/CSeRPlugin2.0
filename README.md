@@ -26,3 +26,7 @@ errors in the workspace.
 9. Please let me know.
 
 
+Note: I just tried to make it work and help to set up a development environment, I didn't even do a complete testing, When I tried copying a complete Java class, it was not working.  May be that is an easy fix, but I am not sure. I was expecting many version errors, because the Eclipse has changed a lot over the years, but luckily I didn't have 
+to change a lot to make it work.  One of the changes I did that can have a affect on the working is commenting (src/org/eclipse/jdt/internal/corext/refactoring/rename/RenameTypeProcessor.java, lines 671-681). Other than that, I made only build path configuration changes from the 2009 version.  
+
+
