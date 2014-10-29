@@ -36,14 +36,14 @@ class="cser.assist.MyQuickAssistProcessor"
 id="org.eclipse.jdt.tutorial.MyQuickAssistProcessor">
 </quickAssistProcessor>
 </extension>
-<extension point="org.eclipse.ui.editorActions">
+<!--extension point="org.eclipse.ui.editorActions">
     <editorContribution targetID="cser.editors.RCFEditor" id="org.eclipse.jdt.internal.ui.CompilationUnitEditor.ruler.actions">
 <action label="BookmarkRulerAction.label" helpContextId="org.eclipse.ui.bookmark_action_context" class="org.eclipse.ui.texteditor.BookmarkRulerAction" actionID="RulerDoubleClick" id="org.eclipse.jdt.internal.ui.javaeditor.BookmarkRulerAction">
          </action>
 <action label="JavaSelectRulerAction.label" class="org.eclipse.jdt.internal.ui.javaeditor.JavaSelectRulerAction" actionID="RulerClick" id="org.eclipse.jdt.internal.ui.javaeditor.JavaSelectRulerAction"/>
 <action label="JavaSelectRCFRulerAction.label" class="cser.assist.RCFJavaSelectRulerAction" actionID="RulerClick" id="cser.assist.RCFJavaSelectRulerAction"/>
 </editorContribution>
-</extension>
+</extension-->
       
 
 <extension id="cser.marker" 
