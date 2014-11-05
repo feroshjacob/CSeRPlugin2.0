@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/CSeRFeature_1.0.0.201411050027.jar" id="CSeRFeature" version="1.0.0.201411050027">
+      <category name="CSeRPlugin"/>
+   </feature>
+   <category-def name="CSeRPlugin" label="CSeRPlugin"/>
+</site>
