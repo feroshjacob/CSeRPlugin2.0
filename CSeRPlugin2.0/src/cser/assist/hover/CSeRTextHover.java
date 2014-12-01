@@ -36,6 +36,8 @@ public class CSeRTextHover implements IJavaEditorTextHover ,ITextHoverExtension,
 
 	}
 
+	/*
+	// original
 	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
 		CSeRChanges changes = ChangeController.loadChanges(((FileEditorInput) editor.getEditorInput()).getFile());
 		if(changes==null) return "";
@@ -55,7 +57,67 @@ public class CSeRTextHover implements IJavaEditorTextHover ,ITextHoverExtension,
 		return null;
 		
 	}
+ */
+	
+	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
+		String retStr=new String("");
+		try{
+		
+		if(editor==null){
+			//System.out.println("Editor is null, return getHoverInfo() with null");
+			return retStr;
+		}
+		else{
+			//System.out.println("Editor is not null, continue..");
+		}
+		
+		if(hoverRegion.getLength()==0){
+			//System.out.println("region is null, !return getHoverInfo() with null "+hoverRegion.getOffset()+" "+hoverRegion.getLength());
+			//return retStr;
+		}
+		else{
+			//System.out.println("region is not null (length="+hoverRegion.getLength()+") continue..");
+		}
+		
+		CSeRChanges changes = ChangeController.loadChanges(((FileEditorInput) editor.getEditorInput()).getFile());
+		//System.out.println("After loadChanges(): offset:"+hoverRegion.getOffset()+"- file: "+ ((FileEditorInput) editor.getEditorInput()).getFile());
+		if(changes==null) retStr= "";
+		CSeRChange change = changes.filterChanges(new Position(hoverRegion.getOffset(),hoverRegion.getLength()).toString());
+		if(change ==null) retStr= "";
+		
+		//System.out.println("After change");
+		
+		if(change !=null){		
+			retStr= change.getMessage();
+		
+		}
+		else{
+			//System.out.println("change is null in getHoverInfo()");
+		}
+		
+		}catch(Exception e){
+			//System.out.println("Exception in getHoverInfo()");
+			e.printStackTrace();
+		}
+		return retStr;
+	}
 
+	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
+		try{
+		CheckPosition checkPosition= editor.getDocumentListener().getCurrentClone()
+				.getCheckPositions().getCurrentPosition(new Position(offset,0));
+		if(checkPosition!=null) {
+			Position position = checkPosition.getCurrentPosition();
+			//System.out.println("Position for hover region:"+position);
+			return new Region(position.offset, position.length);
+		}
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+		
+		return null;
+		
+	}
 	public IInformationControlCreator getHoverControlCreator() {
 		return new IInformationControlCreator() {
 			public IInformationControl createInformationControl(Shell parent) {
@@ -70,6 +132,7 @@ public class CSeRTextHover implements IJavaEditorTextHover ,ITextHoverExtension,
 	}
 
 	public Object getHoverInfo2(ITextViewer textViewer, IRegion hoverRegion) {
+		//System.out.println(" getHoverInfo2() called in CSeRTextHover with region length "+ hoverRegion.getLength());
 		return getHoverInfo(textViewer, hoverRegion);
 	}
 	private IEditorPart getEditor() {

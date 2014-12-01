@@ -70,6 +70,7 @@ public class CSeRChange implements Serializable {
 
 	public String getMessage() {
 		StringBuffer buffer = new StringBuffer();
+		System.out.println("getMessage() called in CSeRChange");
 		for (String str : map.keySet()) {
 			buffer.append("\n" + map.get(str));
 		}

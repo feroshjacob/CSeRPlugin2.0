@@ -16,9 +16,19 @@ public class CopiedRegion {
 	public static  void saveInfo(IFile file, Position pos) {
 		copyInfo = (new CopiedRegion()).new CSerCopyInfo(file, pos);
 	}
+	
+	/*
 	public static Position getPosition() {
 		return copyInfo.getPosition();
+	}*/
+	
+	public static Position getPosition() {
+		if (copyInfo!=null)
+		return copyInfo.getPosition();
+		else
+			return null;
 	}
+	
 	public static IFile getFile() {
 		return copyInfo.getFile();
 	}

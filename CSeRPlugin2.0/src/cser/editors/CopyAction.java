@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
+
 import cser.Activator;
 import cser.region.CopiedRegion;
 
@@ -31,6 +32,7 @@ public class CopyAction extends Action {
 
 	
 	public CopyAction(IAction oldCopyAction){
+		//System.out.println("CopyAction constructor called");
 		this.oldCopyAction = oldCopyAction; 
 		this.setText(oldCopyAction.getText());
 	}
@@ -44,7 +46,8 @@ public class CopyAction extends Action {
 		Position position = new Position(textSelection.getOffset(),textSelection.getLength());
 		CopiedRegion.saveInfo(((FileEditorInput) editor.getEditorInput()).getFile(), position);
 		
-
+		//System.out.println("Copy works! at "+position.offset+":"+position.length);
+		//System.out.println("Region is "+CopiedRegion.getPosition().getLength());
 		}
 	public static IDocument getCopiedDoc(){
 		return copiedDoc;
