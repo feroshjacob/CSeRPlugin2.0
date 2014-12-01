@@ -19,11 +19,13 @@ public class PasteAction extends Action {
 	public PasteAction(IAction oldPasteAction){
 		this.oldPasteAction = oldPasteAction; 
 		this.setText(oldPasteAction.getText());
+		//System.out.println("PasteAction constructor called");
 	}
 	public void runWithEvent(Event e){
-	pasted = 1;
+		//System.out.println("PasteAction.runWithEvent() called");
+		pasted = 1; 
 		oldPasteAction.runWithEvent(e);
-		pasted = 0;
+		pasted = 0; //SR
 	}
 
 }

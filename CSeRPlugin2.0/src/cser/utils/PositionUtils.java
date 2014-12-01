@@ -8,7 +8,6 @@ public class PositionUtils {
 	public static void main(String[] args) {
 		Position pos1 = new Position(23,23); 
 		Position pos2 = new Position(23,23);
-		
 		System.out.println(PositionUtils.contains(pos1,pos2));
 	}
 	
@@ -62,6 +61,7 @@ public class PositionUtils {
 	
 	
 	public static Position extractPositionFrom(String position){
+		//System.out.println("extractPositionFrom() called in PosirionUtilities");
 		String strings[] = position.split(":");
 		int offset=0;
 		int length=0;

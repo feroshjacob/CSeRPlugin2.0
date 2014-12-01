@@ -20,13 +20,13 @@ public class SerialiseHelper {
 
 			try {
 				
-				ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(
-						fName));
+				//System.out.println("Call to serialize() in SerialiseHelper to write change information with: "+fName+" and GlobalPath");
+				ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(fName));  //global path?
 				o.writeObject(object);
 	            			
 				o.close();
 			} catch (FileNotFoundException e) {
-				// System.out.println("File Not Found for writing: " + fName);
+				 System.out.println("File Not Found for writing: "+fName); //global path?
 			} catch (IOException e) {
 				e.printStackTrace();
 			}catch (Exception e) {
@@ -36,15 +36,16 @@ public class SerialiseHelper {
 
  
 	public static Object deserialize(String fName) {
+		
 		try {
-			ObjectInputStream i = new ObjectInputStream(new FileInputStream(
-					fName));
+			System.out.println("Call to deserialize() to read saved change information with "+fName);
+			ObjectInputStream i = new ObjectInputStream(new FileInputStream(fName));
 			
 			Object o = i.readObject();
 			i.close();
 			return o;
 		} catch (FileNotFoundException e) {
-			// System.out.println("File Not Found for reading: "+ fName);
+			 System.out.println("File Not Found for reading: "+ fName);
 
 		} catch (IOException e) {
 			System.out.println("File Empty");

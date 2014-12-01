@@ -18,15 +18,19 @@ import cser.editors.PasteAction;
 public class CSeRRegionListener extends BaseDocumentListener {
 
 	public CSeRRegionListener(ITextEditor editor) {
-		super(editor);
+	 super(editor);
+	 System.out.println("CSeRRegionListener() called");
+		
 	}
 
 	protected void execute(Position event) throws CSeRException {
+		//System.out.println("regionListener execute() called- PasteAction.pasted="+PasteAction.pasted+" "+CopiedRegion.getPosition().offset+" "+CopiedRegion.getPosition().length);
 		if(PasteAction.pasted==1  && !CopiedRegion.isNull()){
 			Position pos = new Position(event.getOffset(), CopiedRegion.getPosition().getLength());
 			// this is a dirty trick to stop creating new clones inside existing clones?
 			CSeRClone copyRoot = CSeRDBController.getSourceCloneObject(fileInEditor);
 			if (copyRoot!=null && CSeRDBController.getTargetClones(copyRoot.getFile()).size() >0) {
+				System.out.println("execute() returned by force");
 				return;
 			}
 			
@@ -35,8 +39,12 @@ public class CSeRRegionListener extends BaseDocumentListener {
 			addPositionUpdater(checkPositions);
 			peerClone = CSeRDBController.getCloneObject(fileInEditor);
 			currentClone = peerClone;
+			System.out.println("Pasted and clone recorded");
 			}
-		else super.execute(event);
+		else{
+			System.out.println("else part called with super.execute() in regionListener");
+			super.execute(event);
+		}
 	}
 
 	protected void registerUpdatedPostions() throws CSeRException {
