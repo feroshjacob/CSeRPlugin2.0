@@ -109,6 +109,7 @@ public abstract class BaseDocumentListener implements IDocumentListener {
 			if (peerClone == null) {// okay, this is a regional clone!
 // dhou				key = checkPosition.getCurrentPosition().toString();
 //				position = checkPosition.getParentPosition();
+				//System.out.println("peerClone is null");
 				positionUpdater = new ParentPositionUpdater(key, fileInEditor);
 			}
 
@@ -231,13 +232,16 @@ public abstract class BaseDocumentListener implements IDocumentListener {
 					/*
 					 * This is an insert in a method
 					 */
+					System.out.println("Current node is a Block");
 					calculator = new BlockCalculator(model, fileInEditor, currentClone);
 					calculator.refreshMarkers(dbNode, currentNode, parentPosition);
 
 				} else if (currentNode instanceof TypeDeclaration) {
+					System.out.println("Current node is a TypeDeclaration");
 					calculator = new TypeCalculator(model, fileInEditor, currentClone);
 					calculator.refreshMarkers(dbNode, currentNode, parentPosition);
 				} else  {
+					System.out.println("Current node is a not a block or TypeDeclaration");
 					calculator = new NodeCalculator(model, fileInEditor, currentClone);
 					calculator.refreshMarkers(dbNode, currentNode, parentPosition);
 				}

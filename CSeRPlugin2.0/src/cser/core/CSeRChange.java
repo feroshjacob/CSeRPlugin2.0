@@ -12,6 +12,7 @@ public class CSeRChange implements Serializable {
 	private Map<String, String> map = new HashMap<String, String>();
 	private String fileName = "";
 	
+	private int type = 0;	
 	private boolean isParent = false; 
 
 	public String getFileName() {
@@ -30,7 +31,6 @@ public class CSeRChange implements Serializable {
 		this.parentPosition = parentPosition;
 	}
 
-	private int type = 0;
 
 	public CSeRChange(String message, int type, String position,
 			String parentPosition, String fileName, boolean isParent) {
