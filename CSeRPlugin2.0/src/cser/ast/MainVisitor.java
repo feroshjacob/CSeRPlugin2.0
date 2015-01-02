@@ -48,6 +48,7 @@ public class MainVisitor extends ASTVisitor {
 
     private Position position =null;
 	public MainVisitor(Position position) {
+	System.out.println("Visitor with pos:["+position+"]");
      this.position = position;
 	}
 	private List<ASTNode> statements = new ArrayList<ASTNode>();
@@ -294,11 +295,17 @@ public class MainVisitor extends ASTVisitor {
 
 	private void addASTNode(ASTNode node) {
 		if(position==null){
+			//System.out.println("ASTNode Not Inside clone:[ "+node.getStartPosition()+", "+node.getLength()+"]");
 			statements.add(node);
 			return;
 		}
-		if(position !=null && checkInside(node) )  
+		if(position !=null && checkInside(node) ){  // add AST Nodes in the clone (defined by position) only
+		//System.out.println("ASTNode Inside clone: [ "+node.getStartPosition()+", "+node.getLength()+"]");
 		statements.add(node);
+		}
+		//else {
+		//	System.out.println("Not added the ASTNode:[ "+node.getStartPosition()+", "+node.getLength()+"]");
+		//}
 	}
 	
 	private boolean checkInside(ASTNode node) {

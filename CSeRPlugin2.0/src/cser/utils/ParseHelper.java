@@ -14,7 +14,7 @@ public class ParseHelper {
 		ASTParser parser = ASTParser.newParser(AST.JLS8); 
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(unit); // set source
-	//	parser.setResolveBindings(true); // we need bindings later on
+		//parser.setResolveBindings(true); // we need bindings later on
 		return (CompilationUnit) parser.createAST(null /* IProgressMonitor */); // parse
 	}
 	public static CompilationUnit parse(char[] unit) {

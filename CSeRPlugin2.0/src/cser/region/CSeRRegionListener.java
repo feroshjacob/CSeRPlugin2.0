@@ -24,9 +24,12 @@ public class CSeRRegionListener extends BaseDocumentListener {
 	}
 
 	protected void execute(Position event) throws CSeRException {
-		//System.out.println("regionListener execute() called- PasteAction.pasted="+PasteAction.pasted+" "+CopiedRegion.getPosition().offset+" "+CopiedRegion.getPosition().length);
+		System.out.println("regionListener execute() called- PasteAction.pasted="+PasteAction.pasted+" "+CopiedRegion.getPosition().offset+" "+CopiedRegion.getPosition().length);
+		System.out.println("execute() called with position:"+event);
 		if(PasteAction.pasted==1  && !CopiedRegion.isNull()){
-			Position pos = new Position(event.getOffset(), CopiedRegion.getPosition().getLength());
+			//Position pos = new Position(event.getOffset(), CopiedRegion.getPosition().getLength());
+			Position pos = new Position(event.getOffset()+(event.getLength()-CopiedRegion.getPosition().getLength()), CopiedRegion.getPosition().getLength()); //SR: position adjusted because the first node was missing in the AST for clone
+			System.out.println("Created position is:"+pos);
 			// this is a dirty trick to stop creating new clones inside existing clones?
 			CSeRClone copyRoot = CSeRDBController.getSourceCloneObject(fileInEditor);
 			if (copyRoot!=null && CSeRDBController.getTargetClones(copyRoot.getFile()).size() >0) {

@@ -66,6 +66,7 @@ public abstract class BaseCalculator implements IMessages {
 		addChange(position, message, type, key);
 	}
 
+	// creates annotation for a given type and position, parameter 'message' isn't used
 	protected void createAnnotation(Position position, String message,
 			String annotationType) {
 			CSeRMarkerAnnotation marker = null;
